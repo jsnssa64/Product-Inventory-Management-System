@@ -23,7 +23,7 @@ namespace StockAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -34,6 +34,6 @@ namespace StockAPI.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }
+        }*/
     }
 }
