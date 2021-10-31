@@ -14,9 +14,16 @@ namespace Data.Model
         public string Name { get; set; }
         public int ProductDescriptionId { get; set; }
         public int ProductTypesBrandId { get; set; }
-        public int QuantityId { get; set; }
         public ProductDescription ProductDescription { get; set; }
         public ProductType_Brand ProductTypesBrand { get; set; }
+        public ICollection<ProductItem> ProductItems { get; set; }
+    }
+
+    public class ProductItem
+    {
+        public int Id { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
         public Quantity Quantity { get; set; }
         public Inventory Inventory { get; set; }
     }

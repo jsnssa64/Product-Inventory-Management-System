@@ -10,8 +10,8 @@ namespace Data.Model
     public class Inventory
     {
         public int Id { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public int ProductItemId { get; set; }
         public int UnitsInStock { get; set; }
+        public ProductItem ProductItem { get; set; }
     }
 }

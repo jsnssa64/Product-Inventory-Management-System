@@ -11,10 +11,11 @@ namespace Data.Model
     public class Quantity
     {
         public int QuantityId { get; set; }
+        public int ProductItemId { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal WeightPerUnit { get; set; }
         public int ItemsPerUnit { get; set; }
-        public ICollection<Product> Product { get; set; }
+        public ProductItem ProductItem { get; set; }
     }
 }
