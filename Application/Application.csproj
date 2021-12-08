@@ -5,9 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ProductOrder\Commands\" />
-    <Folder Include="ProductOrder\EventHandler\" />
-    <Folder Include="ProductOrder\Queries\" />
+    <Folder Include="ProductOrder\Command\CreateXXX\" />
+    <Folder Include="ProductOrder\Command\" />
+    <Folder Include="ProductOrder\Queries\GetProductOrderDetail\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\Data.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

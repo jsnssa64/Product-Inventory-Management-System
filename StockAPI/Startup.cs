@@ -1,4 +1,6 @@
+using CQRSlite.Events;
 using Data.Migrations;
+using EventStore.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using StockAPI.Middleware;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +34,8 @@ namespace StockAPI
 
             services.AddControllers();
 
+            services.AddEventStoreClient("esdb://admin:changeit@localhost:2113?tls=false");
+
             //  Get DbContext From Different Project
             //  For Migrations Use "dotnet ef migrations add NewMigration --project WebApplication1.Migrations"
             services.AddDbContext<AppDbContext>(options =>
@@ -38,6 +43,8 @@ namespace StockAPI
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
             });
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGen(c =>
             {
@@ -61,6 +68,9 @@ namespace StockAPI
 
             app.UseAuthorization();
 
+            //  Custom Middleware
+            app.UseRequestLoggingMiddleware();
+            //  End Custom Middleware
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
