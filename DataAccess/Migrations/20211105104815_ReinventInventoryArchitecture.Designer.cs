@@ -3,14 +3,16 @@ using Data.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211105104815_ReinventInventoryArchitecture")]
+    partial class ReinventInventoryArchitecture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,16 +42,10 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AggregateId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductItemId")
                         .HasColumnType("int");
 
                     b.Property<int>("UnitsInStock")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

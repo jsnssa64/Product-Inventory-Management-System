@@ -19,15 +19,6 @@ namespace Data.Model
         public ICollection<ProductItem> ProductItems { get; set; }
     }
 
-    public class ProductItem
-    {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-        public Quantity Quantity { get; set; }
-        public Inventory Inventory { get; set; }
-    }
-
     public class ProductDescription
     {
         public int Id { get; set; }
@@ -35,4 +26,16 @@ namespace Data.Model
         public ICollection<Product> Products { get; set; }
     }
 
+
+    public class ProductItem
+    {
+        public int Id { get; set; }
+        public int ProductId { get; set; }
+
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal WeightPerUnit { get; set; }
+        public int ItemsPerUnit { get; set; }
+        public Product Product { get; set; }
+        public InventoryItem Inventory { get; set; }
+    }
 }

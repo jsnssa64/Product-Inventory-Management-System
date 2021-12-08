@@ -3,14 +3,16 @@ using Data.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211102220918_ConvertProductItemToInventoryItem")]
+    partial class ConvertProductItemToInventoryItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,6 +35,27 @@ namespace Data.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("Data.Model.Inventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InventoryItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitsInStock")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryItemId")
+                        .IsUnique();
+
+                    b.ToTable("Inventory");
+                });
+
             modelBuilder.Entity("Data.Model.InventoryItem", b =>
                 {
                     b.Property<int>("Id")
@@ -40,22 +63,18 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AggregateId")
+                    b.Property<int>("ItemsPerUnit")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductItemId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UnitsInStock")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
+                    b.Property<decimal>("WeightPerUnit")
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductItemId")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("InventoryItem");
                 });
@@ -98,29 +117,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductDescription");
-                });
-
-            modelBuilder.Entity("Data.Model.ProductItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ItemsPerUnit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("WeightPerUnit")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductItem");
                 });
 
             modelBuilder.Entity("Data.Model.ProductOrder", b =>
@@ -240,15 +236,26 @@ namespace Data.Migrations
                     b.ToTable("ShipmentStatusLogs");
                 });
 
-            modelBuilder.Entity("Data.Model.InventoryItem", b =>
+            modelBuilder.Entity("Data.Model.Inventory", b =>
                 {
-                    b.HasOne("Data.Model.ProductItem", "ProductItem")
+                    b.HasOne("Data.Model.InventoryItem", "InventoryItem")
                         .WithOne("Inventory")
-                        .HasForeignKey("Data.Model.InventoryItem", "ProductItemId")
+                        .HasForeignKey("Data.Model.Inventory", "InventoryItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProductItem");
+                    b.Navigation("InventoryItem");
+                });
+
+            modelBuilder.Entity("Data.Model.InventoryItem", b =>
+                {
+                    b.HasOne("Data.Model.Product", "Product")
+                        .WithMany("InventoryItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Data.Model.Product", b =>
@@ -268,17 +275,6 @@ namespace Data.Migrations
                     b.Navigation("ProductDescription");
 
                     b.Navigation("ProductTypesBrand");
-                });
-
-            modelBuilder.Entity("Data.Model.ProductItem", b =>
-                {
-                    b.HasOne("Data.Model.Product", "Product")
-                        .WithMany("ProductItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Data.Model.ProductOrder", b =>
@@ -343,19 +339,19 @@ namespace Data.Migrations
                     b.Navigation("ProductTypeBrands");
                 });
 
+            modelBuilder.Entity("Data.Model.InventoryItem", b =>
+                {
+                    b.Navigation("Inventory");
+                });
+
             modelBuilder.Entity("Data.Model.Product", b =>
                 {
-                    b.Navigation("ProductItems");
+                    b.Navigation("InventoryItems");
                 });
 
             modelBuilder.Entity("Data.Model.ProductDescription", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Data.Model.ProductItem", b =>
-                {
-                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("Data.Model.ProductType", b =>

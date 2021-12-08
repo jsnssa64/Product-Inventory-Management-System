@@ -3,14 +3,16 @@ using Data.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211102201518_SwitchProductItemForeignKeys")]
+    partial class SwitchProductItemForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,15 +35,12 @@ namespace Data.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("Data.Model.InventoryItem", b =>
+            modelBuilder.Entity("Data.Model.Inventory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AggregateId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ProductItemId")
                         .HasColumnType("int");
@@ -49,15 +48,12 @@ namespace Data.Migrations
                     b.Property<int>("UnitsInStock")
                         .HasColumnType("int");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductItemId")
                         .IsUnique();
 
-                    b.ToTable("InventoryItem");
+                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("Data.Model.Product", b =>
@@ -107,18 +103,18 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ItemsPerUnit")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("WeightPerUnit")
-                        .HasColumnType("decimal(18,4)");
+                    b.Property<int>("QuantityId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("QuantityId")
+                        .IsUnique();
 
                     b.ToTable("ProductItem");
                 });
@@ -188,6 +184,24 @@ namespace Data.Migrations
                     b.ToTable("ProductTypesBrand");
                 });
 
+            modelBuilder.Entity("Data.Model.Quantity", b =>
+                {
+                    b.Property<int>("QuantityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ItemsPerUnit")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("WeightPerUnit")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.HasKey("QuantityId");
+
+                    b.ToTable("Quantity");
+                });
+
             modelBuilder.Entity("Data.Model.Shipment", b =>
                 {
                     b.Property<int>("Id")
@@ -240,11 +254,11 @@ namespace Data.Migrations
                     b.ToTable("ShipmentStatusLogs");
                 });
 
-            modelBuilder.Entity("Data.Model.InventoryItem", b =>
+            modelBuilder.Entity("Data.Model.Inventory", b =>
                 {
                     b.HasOne("Data.Model.ProductItem", "ProductItem")
                         .WithOne("Inventory")
-                        .HasForeignKey("Data.Model.InventoryItem", "ProductItemId")
+                        .HasForeignKey("Data.Model.Inventory", "ProductItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -278,7 +292,15 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Model.Quantity", "Quantity")
+                        .WithOne("ProductItem")
+                        .HasForeignKey("Data.Model.ProductItem", "QuantityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
+
+                    b.Navigation("Quantity");
                 });
 
             modelBuilder.Entity("Data.Model.ProductOrder", b =>
@@ -366,6 +388,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Model.ProductType_Brand", b =>
                 {
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Data.Model.Quantity", b =>
+                {
+                    b.Navigation("ProductItem");
                 });
 
             modelBuilder.Entity("Data.Model.Shipment", b =>
