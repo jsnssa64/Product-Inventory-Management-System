@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{017EC746-6660-44C6-A02B-BC07D2645411}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitMessagingTestService", "MassTransitMessagingTestService\MassTransitMessagingTestService.csproj", "{C104450F-817F-45D4-BD8E-E960BD71CB49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransitMessagingTestService", "MassTransitMessagingTestService\MassTransitMessagingTestService.csproj", "{C104450F-817F-45D4-BD8E-E960BD71CB49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventCateringProjectTests", "EventCateringProjectTests\EventCateringProjectTests.csproj", "{EB4ED0B7-A5E3-445D-8CC4-F19AB7924DB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCateringProjectTestsNUnit", "EventCateringProjectTests\EventCateringProjectTestsNUnit.csproj", "{EB4ED0B7-A5E3-445D-8CC4-F19AB7924DB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
