@@ -1,0 +1,32 @@
+Note:
+	-	Products should have a version and be updated when:
+		-	"Inventory" has been Modified
+		
+	-	Shipment should have a version and be updated when:
+		-	"Shipment_StatusLog" has been Modified
+		-	"Shipment_Product" has been Modified
+
+
+Request Product Order
+	List<Product> products
+	
+	-	Get Products(include version)  
+		Inventory
+	Request multiple products to be ordered
+	Status:
+		-	Requested
+	
+Shipment Status Update
+Update Shipment Status:
+	-	Accept (Accepted) 
+	-	Start Process (Processing)
+	-	Sent Off (InTransit)
+	-	Delivery Accepted (Delivered)
+
+On ShipmentStatus Update Shipment Version should also be updated
+
+
+
+Records that need version checking:
+	Stock Items
+	

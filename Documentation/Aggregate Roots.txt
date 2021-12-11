@@ -1,0 +1,12 @@
+Product (AggregateRoot)
+Mutable:
+	ProductDescription
+	Inventory
+Immutable(Value Object):
+	ProductTypesBrand
+	Quantity
+	
+Note:
+	Immutability only means under the class specified 
+	but if changes within it's on class e.g ProductType or
+	Brand itself it should be mutable.
