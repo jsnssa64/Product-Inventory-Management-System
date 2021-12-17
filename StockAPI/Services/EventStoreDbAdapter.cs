@@ -17,10 +17,10 @@ namespace StockAPI.Services
         }
         public Task<IEnumerable<IEvent>> Get(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(_context.EventStorage.AsEnumerable().Where(x => x.StreamId == aggregateId && x.Version > fromVersion).Select(s => JsonSerializer.Deserialize<IEvent>(s.Payload)));
-
-            _client.
-            throw new NotImplementedException();
+            //return Task.FromResult(_context.EventStorage.AsEnumerable().Where(x => x.StreamId == aggregateId && x.Version > fromVersion).Select(s => JsonSerializer.Deserialize<IEvent>(s.Payload)));
+            //  TODO: Convert To Client
+            //_client.
+           throw new NotImplementedException();
         }
 
         public Task Save(IEnumerable<IEvent> events, CancellationToken cancellationToken = default)
