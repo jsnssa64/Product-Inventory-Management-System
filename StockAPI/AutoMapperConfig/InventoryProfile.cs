@@ -10,17 +10,20 @@ using System.Threading.Tasks;
 
 namespace StockAPI.AutoMapperConfig
 {
-    public class InventoryProfile : Profile
+    public class ProductProfile : Profile
     {
-        public InventoryProfile()
+        public ProductProfile()
         {
             //  Frontend -> CommandHandler
             CreateMap<InventoryItemDto, CreateInventoryItemCommand>().ConstructUsing(x => new CreateInventoryItemCommand(Guid.NewGuid(), 0, x.ProductItemId, x.UnitsInStock));
             //  Event -> Persistence
-            CreateMap<CreateItemInInventoryEvent, InventoryItem>()  .ForMember(dest => dest.Id, opt => opt.Ignore())
-                                                                    .ForMember(dest => dest.AggregateId, opt => opt.MapFrom(src => src.Id));
-            CreateMap<ItemRemovedFromInventoryEvent, InventoryItem>().ForMember(dest => dest.AggregateId, opt => opt.MapFrom(src => src.Id));
-            
+            CreateMap<CreateItemInInventoryEvent, InventoryItem>().ForMember(dest => dest.Id, opt => opt.Ignore());
+                                                                    //  Eventsourcing In-Database Fields
+                                                                    //  .ForMember(dest => dest.AggregateId, opt => opt.MapFrom(src => src.Id));
+            CreateMap<RemoveItemFromInventory, InventoryItem>();
+            //  Eventsourcing In-Database Fields
+            //  .ForMember(dest => dest.AggregateId, opt => opt.MapFrom(src => src.Id));
+
         }
     }
 }
