@@ -8,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace Application.Inventory.WriteModel.Commands
 {
-    public class AddItemsToStockCommand : BaseCommand
+    public class CheckInItemsToInventory : BaseCommand
     {
-        public readonly bool Deactivated;
-        public readonly int StocksAdded;
         public readonly int InventoryItemId;
+        public readonly string Name;
 
-        public AddItemsToStockCommand(Guid id, int inventoryItemId, int stocksAdded, bool deactivated, int originalVersion)
+        //  TODO: DO THIS
+        public CheckInItemsToInventory(Guid id, int inventoryItemId, int originalVersion)
         {
             Id = id;
             InventoryItemId = inventoryItemId;
-            StocksAdded = stocksAdded;
-            Deactivated = deactivated;
             ExpectedVersion = originalVersion;
         }
     }

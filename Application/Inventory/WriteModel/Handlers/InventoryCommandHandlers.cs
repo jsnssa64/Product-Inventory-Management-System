@@ -21,19 +21,19 @@ namespace Application.Inventory.WriteModel.Handlers
 
         public async Task Handle(CreateInventoryItemCommand command)
         {
-            InventoryItem item = new InventoryItem(command.Id, command.ProductItemId, command.UnitsInStock);
+            InventoryItem item = new (command.Id, command.ProductItemId, command.UnitsInStock);
             await _session.Add(item);
             await _session.Commit();
         }
 
-        public async Task Handle(RemoveItemFromInventoryCommand command)
+        public async Task Handle(RemoveItemFromInventory command)
         {
             InventoryItem item = await _session.Get<InventoryItem>(command.Id);
             item.RemoveInventoryItem(command.InventoryItemId);
             await _session.Commit();
         }
 
-        public async Task Handle(RemoveItemsFromStockCommand command)
+        public async Task Handle(RemoveItemsFromStock command)
         {
             InventoryItem item = await _session.Get<InventoryItem>(command.Id);
             item.RemoveStockFromInventory(command.StocksRemoved);

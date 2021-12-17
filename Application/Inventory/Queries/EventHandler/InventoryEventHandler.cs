@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Application.ProductOrder.EventHandler
 {
     public class InventoryEventHandler :    IEventHandler<CreateItemInInventoryEvent>, 
-                                            IEventHandler<RemoveItemFromInventory>,
+                                            IEventHandler<ItemRemovedFromInventory>,
                                             IEventHandler<StockAddedToInventoryItemEvent>, 
                                             IEventHandler<StockRemovedFromInventoryItemEvent>
     {
@@ -23,6 +23,8 @@ namespace Application.ProductOrder.EventHandler
             Mapper = mapper;
             Dbcontext = dbcontext;
         }
+
+        //  TODO:   Convert this for EventStoreDB 
         public Task Handle(CreateItemInInventoryEvent message)
         {
             bool exists = default;
@@ -39,7 +41,7 @@ namespace Application.ProductOrder.EventHandler
                 //  Re-Enable InventoryItem 
                 InventoryItem invItem = Dbcontext.InventoryItem.First(x => x.ProductItemId == message.ProductItemId);
                 invItem.UnitsInStock = message.UnitsInStock;
-                invItem.Version = message.Version;
+                //invItem.Version = message.Version;
                 invItem.Deactivated = false;
             }
 
@@ -47,14 +49,14 @@ namespace Application.ProductOrder.EventHandler
             return Task.CompletedTask;
         }
 
-        public Task Handle(RemoveItemFromInventory message)
+        public Task Handle(ItemRemovedFromInventory message)
         {
             InventoryItem item = Dbcontext.InventoryItem.First(x => x.ProductItemId == message.ProductItemId);
             //  Deactivated Stock and Clear Stock
             item.UnitsInStock = 0;
             item.Deactivated = true;
 
-            item.Version = message.Version;
+            //item.Version = message.Version;
             Dbcontext.SaveChanges();
             return Task.CompletedTask;
         }
@@ -62,7 +64,7 @@ namespace Application.ProductOrder.EventHandler
         public Task Handle(StockAddedToInventoryItemEvent message)
         {
             InventoryItem item = Dbcontext.InventoryItem.FirstOrDefault(item => item.ProductItemId == message.ProductItemId);
-            item.Version = message.Version;
+            //item.Version = message.Version;
             item.UnitsInStock += message.UnitsReceived;
             Dbcontext.SaveChanges();
             return Task.CompletedTask;
@@ -71,7 +73,7 @@ namespace Application.ProductOrder.EventHandler
         public Task Handle(StockRemovedFromInventoryItemEvent message)
         {
             InventoryItem item = Dbcontext.InventoryItem.FirstOrDefault(item => item.ProductItemId == message.ProductItemId);
-            item.Version = message.Version;
+            //item.Version = message.Version;
             item.UnitsInStock -= message.RemovedFromStock;
             Dbcontext.SaveChanges();
             return Task.CompletedTask;

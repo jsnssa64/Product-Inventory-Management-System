@@ -11,6 +11,7 @@ namespace Application.Inventory.Queries.Dtos
         public int InventoryItemId;
         public int ProductItemId;
         public int UnitsInStock;
-        //public int Version;
+        //  TODO: Does this actually need to be here??
+        public Guid id;
     }
 }

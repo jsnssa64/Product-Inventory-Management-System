@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Application.Inventory.WriteModel.Commands
 {
-    public class RemoveItemFromInventoryCommand : BaseCommand
+    public class RemoveItemFromInventory : BaseCommand
     {
         public readonly bool Deactivated;
         public readonly int InventoryItemId;
 
-        public RemoveItemFromInventoryCommand(Guid id, int inventoryItemId, bool deactivated)
+        public RemoveItemFromInventory(Guid id, int inventoryItemId)
         {
             Id = id;
             InventoryItemId = inventoryItemId;
-            Deactivated = deactivated;
+            Deactivated = true;
         }
     }
 }
