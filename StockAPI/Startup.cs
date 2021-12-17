@@ -34,10 +34,9 @@ namespace StockAPI
 
             services.AddControllers();
 
+            //  TODO: Implement basic Event Store Connection
             services.AddEventStoreClient("esdb://admin:changeit@localhost:2113?tls=false");
 
-            //  Get DbContext From Different Project
-            //  For Migrations Use "dotnet ef migrations add NewMigration --project WebApplication1.Migrations"
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
