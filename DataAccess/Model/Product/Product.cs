@@ -1,6 +1,7 @@
 ﻿using Data.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,25 @@ using System.Threading.Tasks;
 
 namespace Data.Model
 {
-    public class Product
+    public class ProductBaseEntity : IValidatableObject
+    {
+        public bool Discontinued { get; set; } = false;
+        public DateTime? DateOfDiscontinuedUTC { get; set; } = null;
+
+        public void Discontinue()
+        {
+            this.Discontinued = true;
+            this.DateOfDiscontinuedUTC = DateTime.UtcNow;
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Discontinued)
+                yield return new ValidationResult("Product Has been Discontinued.");
+        }
+    }
+
+    public class Product : ProductBaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -27,7 +46,7 @@ namespace Data.Model
     }
 
 
-    public class ProductItem
+    public class ProductItem : ProductBaseEntity
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

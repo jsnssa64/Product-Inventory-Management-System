@@ -16,7 +16,7 @@ namespace Data.Model
         public ProductItem ProductItem { get; set; }
         public bool Deactivated { get; set; } 
         //  CQRS - ES
-        public int AggregateId { get; set; }
-        public int Version { get; set; }
+        //public int AggregateId { get; set; }
+        //public int Version { get; set; }
     }
 }
