@@ -59,7 +59,10 @@ namespace StockAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StockAPI v1"));
+                app.UseSwaggerUI(options => {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "StockAPI v1");
+                    //  Serve Swagger at root
+                });
             }
 
             app.UseHttpsRedirection();
@@ -70,7 +73,9 @@ namespace StockAPI
 
             //  Custom Middleware
             app.UseRequestLoggingMiddleware();
+
             //  End Custom Middleware
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
