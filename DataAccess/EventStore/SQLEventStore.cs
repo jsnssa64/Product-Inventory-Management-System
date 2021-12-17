@@ -3,6 +3,7 @@ using Data.EventStore.SQL;
 using Data.Migrations;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,43 @@ using System.Threading.Tasks;
 
 namespace Data
 {
+    public interface IAppDbContext
+    {
+        ESList EventStorage { get; }
+    }
+
+    public class FakeSQlEventStore : IAppDbContext
+    {
+        public ESList EventStorage { get; set; }
+    }
+
+    public class ESList : IEnumerable<EventStorage>
+    {
+        public IEnumerator<EventStorage> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+        public Task AddAsync(EventStorage e, CancellationToken cs)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+
+    public class EventStorage : EventData { }
+
     public class SQLEventStore : IEventStore
     {
         private readonly IEventPublisher _publisher;
-        private readonly AppDbContext _context;
+        private readonly IAppDbContext _context;
 
 
-        public SQLEventStore(AppDbContext context, IEventPublisher publisher)
+        public SQLEventStore(IAppDbContext context, IEventPublisher publisher)
         {
             _context = context;
             _publisher = publisher;
@@ -30,7 +61,7 @@ namespace Data
 
             foreach (var @event in events)
             {
-                EventStorage es = new EventStorage()
+                EventStorage es = new ()
                 {
                     @Type = @event.GetType().FullName,
                     StreamId = @event.Id,

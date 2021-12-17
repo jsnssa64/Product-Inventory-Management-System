@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.EventStore.SQL
 {
-    public class IEventData
+    public interface IEventData
     {
         int Id { get; set; }
         //  Event Name
@@ -19,6 +19,16 @@ namespace Data.EventStore.SQL
         DateTime Created { get; set; }
         //  Serialized JSON Event Store
         string Payload { get; set; }
+    }
+
+    public abstract class EventData : IEventData
+    {
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public Guid StreamId { get; set; }
+        public int Version { get; set; }
+        public DateTime Created { get; set; }
+        public string Payload { get; set; }
     }
 }
 

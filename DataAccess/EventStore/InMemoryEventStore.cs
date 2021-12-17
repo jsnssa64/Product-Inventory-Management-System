@@ -11,7 +11,7 @@ namespace Data
     public class CustomEventStore : IEventStore
     {
         private readonly IEventPublisher _publisher;
-        private readonly Dictionary<Guid, List<IEvent>> _inMemoryDb = new Dictionary<Guid, List<IEvent>>();
+        private readonly Dictionary<Guid, List<IEvent>> _inMemoryDb = new ();
 
         public CustomEventStore(IEventPublisher publisher)
         {
