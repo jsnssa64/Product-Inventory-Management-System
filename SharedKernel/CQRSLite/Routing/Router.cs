@@ -14,7 +14,7 @@ namespace CQRSlite.Routing
     /// </summary>
     public class Router : ICommandSender, IEventPublisher, IQueryProcessor, IHandlerRegistrar
     {
-        private readonly Dictionary<Type, List<Func<IMessage, CancellationToken, Task>>> _routes = new Dictionary<Type, List<Func<IMessage, CancellationToken, Task>>>();
+        private readonly Dictionary<Type, List<Func<IMessage, CancellationToken, Task>>> _routes = new ();
 
         public void RegisterHandler<T>(Func<T, CancellationToken, Task> handler) where T : class, IMessage
         {
