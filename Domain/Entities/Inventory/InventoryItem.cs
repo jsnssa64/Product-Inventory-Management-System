@@ -37,7 +37,7 @@ namespace Domain.Entities.Inventory
             Deactivated = false;
         }
 
-        public void Apply(RemoveItemFromInventory e)
+        public void Apply(ItemRemovedFromInventory e)
         {
             UnitsInStock = 0;
             Deactivated = true;
@@ -73,14 +73,14 @@ namespace Domain.Entities.Inventory
                 throw new Exception("Cannot Remove More Stock Than Exists");
 
             if (total.Equals(0))
-                ApplyChange(new RemoveItemFromInventory(Id, ProductItemId));
+                ApplyChange(new ItemRemovedFromInventory(Id, ProductItemId));
             else
                 ApplyChange(new StockRemovedFromInventoryItemEvent(Id, ProductItemId, count));
         }
 
         public void RemoveInventoryItem(int inventoryItemId)
         {
-            ApplyChange(new RemoveItemFromInventory(Id, inventoryItemId));
+            ApplyChange(new ItemRemovedFromInventory(Id, inventoryItemId));
         }
     }
 }
