@@ -52,7 +52,10 @@ namespace Data.Model
         public int ProductId { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]
+        [Required]
         public decimal WeightPerUnit { get; set; }
+        [Required]
+        public string UnitName { get; set; }
         public int ItemsPerUnit { get; set; }
         public Product Product { get; set; }
         public InventoryItem Inventory { get; set; }
