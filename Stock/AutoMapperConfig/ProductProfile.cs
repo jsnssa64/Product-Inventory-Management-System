@@ -11,11 +11,11 @@ namespace StockAPI.AutoMapperConfig
 {
     public class ProductProfile : Profile
     {
-        public ProductProfile(IProductAppModel appModel)
+        public ProductProfile()
         {
-            CreateMap<ProductItem, IDiscontinuedItem>()
+            CreateMap<ProductItem, ItemViewModel>()
                 .ForMember(dest => dest.Unit,
-                    opt => opt.MapFrom(src => appModel.FormatUnits(src.ItemsPerUnit, src.WeightPerUnit, src.UnitName)))
+                    opt => opt.Ignore())
                 .ForMember(dest => dest.DateOfDiscontinuation,
                     opt => opt.MapFrom(src => src.DateOfDiscontinuedUTC));
 

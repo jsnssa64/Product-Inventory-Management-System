@@ -13,7 +13,6 @@ namespace Stock.Models
         string Type { get; set; }
         string Brand { get; set; }
         int ProductCount { get; set; }
-
     }
 
     public class BaseProductViewModel : IBaseProduct
@@ -33,7 +32,7 @@ namespace Stock.Models
     public class DetailProductViewModel : BaseProductViewModel
     {
         public string Description { get; set; }
-        public List<IDiscontinuedItem> Items { get; set; }
+        public List<ItemViewModel> Items { get; set; }
 
     }
 }

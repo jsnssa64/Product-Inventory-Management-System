@@ -20,7 +20,7 @@ namespace Stock.ApplicationModel
             //  " 6 x 400g"
             //  " 6 x 4.5g"
             //  " 450g"
-            if(ItemsPerUnit != null)
+            if(ItemsPerUnit > 1)
             {
                 sb.Append(ItemsPerUnit + " X ");
             }

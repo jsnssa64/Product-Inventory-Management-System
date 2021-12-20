@@ -9,6 +9,7 @@ using Data.Migrations;
 using Data.Model;
 using AutoMapper;
 using Stock.Models;
+using Stock.ApplicationModel;
 
 namespace Stock.Controllers
 {
@@ -16,11 +17,13 @@ namespace Stock.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        public IProductAppModel AppModel { get; set; }
 
-        public ProductsController(AppDbContext context, IMapper mapper)
+        public ProductsController(AppDbContext context, IMapper mapper, IProductAppModel appModel)
         {
             _context = context;
             _mapper = mapper;
+            AppModel = appModel;
         }
 
         // GET: Products
@@ -56,6 +59,15 @@ namespace Stock.Controllers
             }
 
             DetailProductViewModel productview = _mapper.Map<DetailProductViewModel>(product);
+
+            foreach (var pi in product.ProductItems) {
+                productview.Items.Add(new ItemViewModel
+                {
+                    Unit = AppModel.FormatUnits(pi.ItemsPerUnit, pi.WeightPerUnit, pi.UnitName),
+                    DateOfDiscontinuation = pi.DateOfDiscontinuedUTC?.ToLocalTime()
+                });
+            }
+
 
             return View(productview);
         }
