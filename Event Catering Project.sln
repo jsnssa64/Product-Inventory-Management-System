@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransitMessagingTestSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCateringProjectTestsNUnit", "EventCateringProjectTests\EventCateringProjectTestsNUnit.csproj", "{EB4ED0B7-A5E3-445D-8CC4-F19AB7924DB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock", "Stock\Stock.csproj", "{757D1DF1-190E-4073-9990-EB96B5F5F747}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{EB4ED0B7-A5E3-445D-8CC4-F19AB7924DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB4ED0B7-A5E3-445D-8CC4-F19AB7924DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB4ED0B7-A5E3-445D-8CC4-F19AB7924DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{757D1DF1-190E-4073-9990-EB96B5F5F747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{757D1DF1-190E-4073-9990-EB96B5F5F747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{757D1DF1-190E-4073-9990-EB96B5F5F747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{757D1DF1-190E-4073-9990-EB96B5F5F747}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
