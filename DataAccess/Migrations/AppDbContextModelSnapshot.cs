@@ -117,7 +117,7 @@ namespace Data.Migrations
                     b.Property<bool>("Discontinued")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ItemsPerUnit")
+                    b.Property<int>("ItemsPerUnit")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
