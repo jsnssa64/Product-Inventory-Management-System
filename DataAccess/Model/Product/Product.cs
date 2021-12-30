@@ -35,14 +35,14 @@ namespace Data.Model
         public int ProductTypesBrandId { get; set; }
         public ProductDescription ProductDescription { get; set; }
         public ProductType_Brand ProductTypesBrand { get; set; }
-        public List<ProductItem> ProductItems { get; set; }
+        public ICollection<ProductItem> ProductItems { get; set; }
     }
 
     public class ProductDescription
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public List<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 
 
